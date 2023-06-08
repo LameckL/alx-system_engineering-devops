@@ -1,2 +1,2 @@
 #!/bin/bash
-pwd
+echo "Current working directory: $current_dir"
