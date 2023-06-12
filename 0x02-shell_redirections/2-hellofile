@@ -1,2 +1,2 @@
 #!/bin/bash
-cat /etc/passwd; printf "\n"
+cat /etc/passwd; \n
