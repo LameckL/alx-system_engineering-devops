@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "Total dirs in  PATH: $(IFS=":"; set -f; set -- $PATH; echo $#)"
+echo $PATH tr ':' '\n' | wc -1
