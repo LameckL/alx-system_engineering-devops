@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# fix a server whose name points to a localhost
+echo "ServerName localhost" >> /etc/apache2/apache2.conf
+service apache2 start
