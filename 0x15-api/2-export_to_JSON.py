@@ -1,20 +1,37 @@
 #!/usr/bin/python3
-"""script to export data in the JSON format"""
-
-import json
-import requests
-import sys
+"""[Export data in json format]
+"""
 
 if __name__ == "__main__":
-    user_id = sys.argv[1]
-    url = "https://jsonplaceholder.typicode.com/"
-    user = requests.get(url + "users/{}".format(user_id)).json()
-    username = user.get("username")
-    dos = requests.get(url + "dos", params={"userId": user_id}).json()
+    import json
+    import requests
+    import sys
+    url_user = "https://jsonplaceholder.typicode.com/users/{}".format(
+        sys.argv[1])
+    url_todo = "https://jsonplaceholder.typicode.com/users/{}/todos".format(
+        sys.argv[1])
 
-    with open("{}.json".format(user_id), "w") as jsonfile:
-        json.dump({user_id: [{
-                "task": t.get("title"),
-                "completed": t.get("completed"),
-                "username": username
-            } for t in dos]}, jsonfile)
+    employee = requests.get(url_user).json()
+    emplyee_username = employee.get('username')
+
+    # This loops the the tasks and check to
+    all_tasks = requests.get(url_todo).json()
+    # Create dictonary for inner level of dicts
+    todo_dict = {}
+    # file name
+    file_name = "{}.json".format(sys.argv[1])
+    # list for list of dictonaries
+    todo_tasks = []
+    with open(file_name, 'w') as f:
+        for task in all_tasks:
+            task_dict = {}
+            # get each individual items doe the inner dicts which include task
+            # completed, and username
+            task_dict['task'] = task.get('title')
+            task_dict['completed'] = task.get('completed')
+            task_dict['username'] = emplyee_username
+            # appending to the list of dictonaries
+            todo_tasks.append(task_dict)
+            # setting the id equal to the dictonary
+        todo_dict[sys.argv[1]] = todo_tasks
+        json.dump(todo_dict, f, indent=2)
