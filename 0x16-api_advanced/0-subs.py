@@ -1,7 +1,4 @@
 #!/usr/bin/python3
-"""
-Contains the number_of_subscribers function
-"""
 
 import requests
 
@@ -24,7 +21,5 @@ def number_of_subscribers(subreddit):
         data = response.json()
         subscribers = data.get("data", {}).get("subscribers", 0)
         return subscribers
-    except requests.RequestException:
+    except (requests.RequestException, ValueError):
         return 0
-
-
